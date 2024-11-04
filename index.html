@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        td {
+            border: 1px solid #ccc;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px;
+            background-color: #fff;
+            transition: background-color 0.3s;
+        }
+        td:hover {
+            background-color: #f0f0f0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        #admin-section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #login-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+    <h1>안녕하세요, GitHub Pages!</h1>
+    <table id="content">
+        <tr>
+            <td><img src="https://via.placeholder.com/150" alt="이미지 1"></td>
+            <td><img src="https://via.placeholder.com/150" alt="이미지 2"></td>
+        </tr>
+        <tr>
+            <td><img src="https://via.placeholder.com/150" alt="이미지 3"></td>
+            <td><img src="https://via.placeholder.com/150" alt="이미지 4"></td>
+        </tr>
+    </table>
+
+    <div id="admin-section">
+        <h2>내용 수정</h2>
+        <textarea id="new-content" rows="4" placeholder="새로운 이미지 URL을 입력하세요 (각 줄에 하나)"></textarea><br>
+        <button onclick="updateContent()">수정하기</button>
+    </div>
+
+    <div id="login-section">
+        <h2>관리자 로그인</h2>
+        <input type="email" id="email" placeholder="이메일">
+        <input type="password" id="password" placeholder="비밀번호">
+        <button onclick="login()">로그인</button>
+    </div>
+
+    <script>
+        const correctEmail = "admin@example.com"; // 테스트용 이메일
+        const correctPassword = "password"; // 테스트용 비밀번호
+
+        function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (email === correctEmail && password === correctPassword) {
+                document.getElementById("admin-section").style.display = "block";
+                document.getElementById("login-section").style.display = "none";
+                alert("로그인 성공!");
+            } else {
+                alert("로그인 실패: 이메일 또는 비밀번호가 틀렸습니다.");
+            }
+        }
+
+        function updateContent() {
+            const newContent = document.getElementById("new-content").value.split('\n');
+            const images = document.querySelectorAll('#content img');
+
+            if (newContent.length !== images.length) {
+                alert("이미지 URL의 개수가 맞지 않습니다.");
+                return;
+            }
+
+            newContent.forEach((url, index) => {
+                images[index].src = url; // 새로운 이미지 URL로 변경
+            });
+            alert("내용이 수정되었습니다.");
+        }
+    </script>
+</body>
+</html>
