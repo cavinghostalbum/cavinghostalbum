@@ -77,22 +77,30 @@
     </style>
 </head>
 <body>
-    <h1>이쁘게 꾸미고 링크 넣고 하면 좋을거 같네요</h1>
+    <h1>안녕하세요, GitHub Pages!</h1>
+
+    <div id="image-selection" style="display: none;">
+        <h2>이미지 선택</h2>
+        <label><input type="checkbox" onchange="toggleImage(0)" checked> 이미지 1</label>
+        <label><input type="checkbox" onchange="toggleImage(1)" checked> 이미지 2</label>
+        <label><input type="checkbox" onchange="toggleImage(2)" checked> 이미지 3</label>
+        <label><input type="checkbox" onchange="toggleImage(3)" checked> 이미지 4</label>
+    </div>
+
     <table id="content">
         <tr>
-            <td><img src="https://i.namu.wiki/i/B7taZEPvuBeCSfQE5hHUovmzb_9ZRRyvBVDwgM9tkKORG2OX8nlWqzLnmpMiZelfNpy3YwZ8nyD5I09sMZmPdg.webp" alt="이미지 1"></td>
-            <td><img src="https://i.namu.wiki/i/B7taZEPvuBeCSfQE5hHUovmzb_9ZRRyvBVDwgM9tkKORG2OX8nlWqzLnmpMiZelfNpy3YwZ8nyD5I09sMZmPdg.webp" alt="이미지 2"></td>
+            <td><img src="https://via.placeholder.com/150" alt="이미지 1"></td>
+            <td><img src="https://via.placeholder.com/150" alt="이미지 2"></td>
         </tr>
         <tr>
-            <td><img src="https://i.namu.wiki/i/VB9gJ9L1egJZ_xIDXgd4tylesaiOktLesMUBhjjQ1S6rn7I1h1D8gwlyAXnvnhoCJ1LdK2Fxg_sXtCu9AdPGpqRcQcawplr9ybnP7CGBj4iDpBzpDxYGvvN7m-ImB0TSdnsqvnqrXYFEV2malI2pCQ.webp" alt="이미지 3"></td>
-            <td><img src="https://i.namu.wiki/i/PE4WjV9XG2_KkiU1aC3YZUktTrD28W_jc4X3VcWV1eoR2LQE1ncoTKZM0N1g2wPNN9SXClgHvZGgV22ClRk6JUl8ElW2k-dJusityD8veLpTqrXo99ch2AdAzkGE2w0TsrJ94ohHnAJx4xEguNQ9AQ.webp" alt="이미지 4"></td>
+            <td><img src="https://via.placeholder.com/150" alt="이미지 3"></td>
+            <td><img src="https://via.placeholder.com/150" alt="이미지 4"></td>
         </tr>
     </table>
 
     <div id="admin-section">
-        <h2>내용 수정</h2>
-        <textarea id="new-content" rows="4" placeholder="새로운 이미지 URL을 입력하세요 (각 줄에 하나)"></textarea><br>
-        <button onclick="updateContent()">수정하기</button>
+        <h2>관리자 기능</h2>
+        <button onclick="saveCheckboxStates()">변경 사항 저장</button>
     </div>
 
     <div id="login-section">
@@ -113,25 +121,28 @@
             if (email === correctEmail && password === correctPassword) {
                 document.getElementById("admin-section").style.display = "block";
                 document.getElementById("login-section").style.display = "none";
+                document.getElementById("image-selection").style.display = "block"; // 이미지 선택 표시
                 alert("로그인 성공!");
             } else {
                 alert("로그인 실패: 이메일 또는 비밀번호가 틀렸습니다.");
             }
         }
 
-        function updateContent() {
-            const newContent = document.getElementById("new-content").value.split('\n');
+        function toggleImage(index) {
             const images = document.querySelectorAll('#content img');
+            const checkbox = document.querySelectorAll('#image-selection input[type="checkbox"]')[index];
 
-            if (newContent.length !== images.length) {
-                alert("이미지 URL의 개수가 맞지 않습니다.");
-                return;
-            }
+            images[index].style.display = checkbox.checked ? 'block' : 'none'; // 체크 여부에 따라 이미지 표시
+        }
 
-            newContent.forEach((url, index) => {
-                images[index].src = url; // 새로운 이미지 URL로 변경
-            });
-            alert("내용이 수정되었습니다.");
+        function saveCheckboxStates() {
+            const checkboxes = document.querySelectorAll('#image-selection input[type="checkbox"]');
+            const states = Array.from(checkboxes).map(checkbox => checkbox.checked);
+
+            // 여기에 서버에 체크박스 상태를 저장하는 API 호출 추가
+            // 예: fetch('서버_URL', { method: 'POST', body: JSON.stringify(states) });
+
+            alert("체크박스 상태가 저장되었습니다.");
         }
     </script>
 </body>
